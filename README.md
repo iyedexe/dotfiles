@@ -3,6 +3,10 @@
 - `.bashrc`: bash config for Git Bash on Windows (also WSL, Linux, macOS):
   same prompt, history search and aliases as the PowerShell profile. See
   below.
+- `cmd/`: the same for the classic Command Prompt (`cmd.exe`, what runs
+  `.bat` files): AutoRun script, `doskey` aliases, `bin` shims for
+  `grep`/`find`/`head`/`tail`/`df`/`du`..., and Clink files for Ctrl+R and the
+  git branch. See `cmd/README.md`.
 - `Microsoft.PowerShell_profile.ps1`: Windows PowerShell profile that mimics
   Linux bash: same prompt, Ctrl+R history search, and `ls`/`ll`/`grep`/`find`/
   `df`/`du`/`head`/`tail`/`rm -rf`/`export` and friends. See below.
@@ -42,6 +46,18 @@ What you get:
 
 Machine-specific settings go in `~/.bashrc.local`, which is loaded last and
 not committed.
+
+## Windows Command Prompt (cmd.exe)
+
+```bat
+git clone https://github.com/iyedexe/dotfiles %USERPROFILE%\dotfiles
+%USERPROFILE%\dotfiles\cmd\install.cmd
+```
+
+Registers an AutoRun script for every interactive cmd session. Install
+Clink first (`winget install chrisant996.Clink`) to get Ctrl+R history search
+and the git branch in the prompt. Full command table and limits in
+`cmd/README.md`.
 
 ## Windows shell (PowerShell)
 
