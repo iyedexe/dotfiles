@@ -49,14 +49,44 @@ not committed.
 
 ## Windows Command Prompt (cmd.exe)
 
+Targets the classic Command Prompt, the shell that runs `.bat` files. It has
+no rc file, so `install.cmd` registers `cmd\autorun.cmd` in the AutoRun
+registry key (user-level, no admin) and enables colour sequences in the
+classic console. Run once:
+
 ```bat
 git clone https://github.com/iyedexe/dotfiles %USERPROFILE%\dotfiles
 %USERPROFILE%\dotfiles\cmd\install.cmd
 ```
 
-Registers an AutoRun script for every interactive cmd session. Install
-Clink first (`winget install chrisant996.Clink`) to get Ctrl+R history search
-and the git branch in the prompt. Full command table and limits in
+Install [Clink](https://github.com/chrisant996/clink) first
+(`winget install chrisant996.Clink`) if you want Ctrl+R; bare cmd.exe cannot
+do it. `cmd\uninstall.cmd` reverts everything.
+
+What you get:
+
+| Feature | Details |
+|---|---|
+| Prompt | `[user@host:C:\path]$` in the `.bashrc` colours; with Clink also `~` and the git branch |
+| History | `history`, `h`, `hgrep`. With Clink: `Ctrl+R`/`Ctrl+S` search, `Up`/`Down` prefix search, Emacs keys, inline suggestions, 10k shared entries. Without: `F7` list, `F8` prefix search |
+| Listing | `ls [-alR]`, `ll`, `la`, `l` (on top of `dir`) |
+| Search | `grep [-inrvlcE] PATTERN [FILE\|DIR...]` on top of `findstr`, reads a pipe too; `find PATH -name X -type f\|d` on top of `dir /s /b` (`find /c ...` still reaches the Windows `find.exe`); `psgrep` |
+| Text | `cat`, `less`, `head -n`, `tail -n`, `tail -f`, `wc [-lwc]`, `diff`, `touch`, `which` (shows macros too) |
+| Files | `rm -rf`, `cp -r`, `mv`, `mkdir -p`, `ln`, `mkcd`, `..`, `...`, `~`, `pwd`, `wpath` |
+| System | `df`, `du [-s]`, `free`, `uptime`, `top`, `ps`, `kill`, `ifconfig`, `myip`, `path`, `open`, `e.`, `sudo` (gsudo or UAC), `pbcopy`, `pbpaste` |
+| Env | `export FOO=bar`, `env`, `printenv`, `unset`, `alias` |
+| Misc | `now`, `date`, `time`, `md5sum`, `sha256sum`, `reload`, `g`, `gs`, `gl`, `gd`, `gp`, `gco`, `ga` |
+
+Layout: `cmd\autorun.cmd` (prompt, PATH, loads macros), `cmd\macros.doskey`
+(aliases), `cmd\bin\*.cmd` (commands with real flag parsing),
+`cmd\clink\` (prompt script and `.inputrc` for Clink). Machine-specific
+settings go in `%USERPROFILE%\autorun.local.cmd`, called last and not
+committed.
+
+Limits: `grep` is only as good as `findstr` (basic regex, cannot skip
+`.git`/`node_modules`), `find` prints absolute paths, `doskey` aliases apply
+only at the prompt and not inside `.bat` files, and sessions started with
+`cmd /c` skip the setup entirely so build tools are unaffected. More in
 `cmd/README.md`.
 
 ## Windows shell (PowerShell)
