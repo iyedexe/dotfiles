@@ -1,0 +1,11 @@
+# Normalise line endings in the repo, and give Windows shells what they expect
+# on checkout: cmd.exe needs CRLF for reliable goto/label handling.
+* text=auto
+*.cmd    text eol=crlf
+*.bat    text eol=crlf
+*.doskey text eol=crlf
+*.ps1    text eol=crlf
+*.sh     text eol=lf
+.bashrc  text eol=lf
+*.lua    text eol=lf
+.inputrc text eol=lf
