@@ -1,6 +1,8 @@
 # dotfiles
 
-- `.bashrc`: Linux shell prompt with the current git branch.
+- `.bashrc`: bash config for Git Bash on Windows (also WSL, Linux, macOS):
+  same prompt, history search and aliases as the PowerShell profile. See
+  below.
 - `Microsoft.PowerShell_profile.ps1`: Windows PowerShell profile that mimics
   Linux bash: same prompt, Ctrl+R history search, and `ls`/`ll`/`grep`/`find`/
   `df`/`du`/`head`/`tail`/`rm -rf`/`export` and friends. See below.
@@ -9,6 +11,37 @@
   books (clean code, functional programming, testing and debugging, data
   engineering, design and architecture). See `.claude/skills/README.md` for
   the source books and how to link them globally.
+
+## Windows bash (Git Bash)
+
+Targets the bash that ships with Git for Windows, and works unchanged in WSL,
+Linux and macOS. Install (Git Bash is a login shell, so `.bash_profile` has
+to load `.bashrc`):
+
+```sh
+git clone https://github.com/iyedexe/dotfiles ~/dotfiles
+echo '. ~/dotfiles/.bashrc' >> ~/.bashrc
+echo '[ -f ~/.bashrc ] && . ~/.bashrc' >> ~/.bash_profile
+. ~/.bashrc
+```
+
+What you get:
+
+| Feature | Details |
+|---|---|
+| Prompt | `[user@host:~/path] (branch) $`, same colours as the PowerShell profile, window title set |
+| History | 10k entries shared across windows, no duplicates, timestamps, `Ctrl+R`/`Ctrl+S` search, `Up`/`Down` prefix search, `h`, `hgrep` |
+| Readline | case-insensitive completion, coloured completion, `Ctrl+Left/Right` word jumps, Emacs keys |
+| Listing | coloured `ls`, `ll`, `la`, `lt`, `dus` (sizes sorted) |
+| Search | coloured `grep`, `gr` (recursive, skips `.git`/`node_modules`/...), `ff` (find file), `fd` (find dir), `psgrep` |
+| Files | `mkcd`, `..`, `...`, `-`, `extract` (any archive), `targz`, `groot` (git root), safe `rm -I`/`cp -i`/`mv -i` |
+| System | `df -h`, `du -h`, `ports`, `myip`, `path`, `open`, `now`, `reload`, `which` (shows aliases too) |
+| Git | `g`, `gs`, `gl`, `gd`, `gp`, `gc`, `gco`, `ga` with git completion |
+| Git Bash only | `winpty` wrappers for python/node/etc. under mintty, `free`/`uptime`/`top` via PowerShell, `ifconfig`, `pbcopy`/`pbpaste` (clipboard), `wpath`/`upath` (path conversion), `e.` (Explorer here), `kill9`, `sudo` via gsudo, real symlinks from `ln -s` |
+| WSL | `pbcopy`/`pbpaste`, `wpath`/`upath`, `e.`, `open` through Explorer |
+
+Machine-specific settings go in `~/.bashrc.local`, which is loaded last and
+not committed.
 
 ## Windows shell (PowerShell)
 
