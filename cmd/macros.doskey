@@ -1,0 +1,68 @@
+; doskey macros loaded by autorun.cmd.  $* = all args, $1..$9 = args,
+; $T = command separator, $B = pipe (|), $G = > , $L = <
+; Anything with real argument parsing lives in bin\*.cmd instead.
+
+; --- navigate ---
+..=cd ..
+...=cd ..\..
+....=cd ..\..\..
+~=cd /d "%USERPROFILE%"
+mkcd=md "$1" $T cd "$1"
+pwd=cd
+cd=cd /d $*
+
+; --- listing / text (real flag parsing is in bin\ls.cmd etc.) ---
+ll=ls -lh $*
+la=ls -lah $*
+l=ls $*
+cat=type $*
+less=more $*
+clear=cls
+c=cls
+diff=fc $*
+egrep=grep -E $*
+psgrep=tasklist $B findstr /i $*
+
+; --- files ---
+mv=move /-y $*
+ln=mklink $*
+
+; --- system ---
+ps=tasklist $*
+kill=taskkill /F /PID $*
+ifconfig=ipconfig $*
+open=start "" $*
+e.=explorer .
+reload=call "%DOTFILES_CMD%\autorun.cmd"
+now=powershell -NoProfile -Command "Get-Date -Format yyyy-MM-dd_HH:mm:ss"
+date=date /t
+time=time /t
+md5sum=certutil -hashfile $1 MD5
+sha256sum=certutil -hashfile $1 SHA256
+top=powershell -NoProfile -Command "Get-Process $B Sort-Object CPU -Descending $B Select-Object -First 20 Id,ProcessName,CPU,@{n='Mem(MB)';e={[int]($_.WorkingSet64/1MB)}} $B Format-Table -AutoSize"
+uptime=powershell -NoProfile -Command "$b=(Get-CimInstance Win32_OperatingSystem).LastBootUpTime; $u=(Get-Date)-$b; 'up {0}d {1:00}h {2:00}m (since {3:yyyy-MM-dd HH:mm})' -f $u.Days,$u.Hours,$u.Minutes,$b"
+myip=curl -s https://ifconfig.me $T echo.
+path=echo %PATH:;=&echo %
+pbcopy=clip
+pbpaste=powershell -NoProfile -Command Get-Clipboard
+
+; --- environment ---
+export=set $*
+env=set
+printenv=set $*
+unset=set $1=
+alias=doskey /macros
+
+; --- history (Ctrl+R needs Clink; F7 = list, F8 = prefix search without it) ---
+history=doskey /history
+h=doskey /history
+hgrep=doskey /history $B findstr /i $*
+
+; --- git ---
+g=git $*
+gs=git status -sb $*
+gl=git log --oneline --graph --decorate -20 $*
+gd=git diff $*
+gp=git pull $*
+gco=git checkout $*
+ga=git add $*
