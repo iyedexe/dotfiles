@@ -11,6 +11,9 @@
   Linux bash: same prompt, Ctrl+R history search, and `ls`/`ll`/`grep`/`find`/
   `df`/`du`/`head`/`tail`/`rm -rf`/`export` and friends. See below.
 - `decorators.py`: dataclass serialisation helpers.
+- `revproxy/`: uv-managed Python reverse proxy (services, static sites,
+  redirects, WebSockets, TLS) configured by a TOML file that hot-reloads on
+  save. See `revproxy/README.md`.
 - `.claude/skills/`: Claude Code skills distilled from classic programming
   books (clean code, functional programming, testing and debugging, data
   engineering, design and architecture). See `.claude/skills/README.md` for

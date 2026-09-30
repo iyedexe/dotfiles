@@ -1,0 +1,82 @@
+# revproxy config. Saved changes are applied automatically; if the new file
+# is invalid, the error is logged and the previous config keeps serving.
+# Relative paths are relative to this file. Validate with: revproxy --check -c <file>
+
+[server]
+log_level = "info"     # debug | info | warning | error | critical
+access_log = true      # one line per request on the revproxy.access logger
+
+# One [[listeners]] block per address. Omit the section to listen on 0.0.0.0:8080.
+[[listeners]]
+host = "0.0.0.0"
+port = 8080
+
+# HTTPS: the certificate files are watched too, so a renewal (e.g. certbot)
+# is picked up without dropping connections.
+# [[listeners]]
+# port = 8443
+# tls_cert = "/etc/letsencrypt/live/example.com/fullchain.pem"
+# tls_key  = "/etc/letsencrypt/live/example.com/privkey.pem"
+
+# ---------------------------------------------------------------------------
+# Routes. Each route sets exactly one of: proxy, static, redirect, respond.
+#
+#   host = "app.example.com"            optional; a string or a list;
+#                                       "*.example.com" matches any subdomain;
+#                                       omitted = any host
+#   path = "/api"                       path prefix, matched on whole segments
+#                                       ("/api" matches /api and /api/x, not /apix)
+#   response_headers = { X-Frame-Options = "DENY" }   added to every response
+#
+# Precedence: exact host > wildcard host > no host, then longest path, then
+# order in this file.
+# ---------------------------------------------------------------------------
+
+# Health check answered by the proxy itself.
+[[routes]]
+name = "health"
+path = "/healthz"
+respond = "ok\n"
+status = 200                       # optional, default 200
+content_type = "text/plain"        # optional
+
+# A backend service. WebSockets on this path are proxied too.
+[[routes]]
+name = "api"
+path = "/api"
+proxy = "http://127.0.0.1:3000"    # or a list: round robin with failover
+strip_prefix = true                # /api/users -> http://127.0.0.1:3000/users
+preserve_host = false              # true forwards the client's Host header
+timeout = 60                       # seconds to wait for upstream data
+request_headers = { X-From-Proxy = "revproxy" }
+
+# Several instances of one service, load balanced round robin. An instance
+# that refuses connections is skipped.
+[[routes]]
+name = "app"
+host = ["app.example.com", "app.localhost"]
+proxy = ["http://127.0.0.1:5001", "http://127.0.0.1:5002"]
+preserve_host = true
+
+# Everything on any *.docs.localhost subdomain goes to a docs server.
+[[routes]]
+name = "docs"
+host = "*.docs.localhost"
+proxy = "http://127.0.0.1:8000"
+
+# Old URL moved elsewhere; keep_path turns /old/a?b into https://example.com/new/a?b.
+[[routes]]
+name = "old"
+path = "/old"
+redirect = "https://example.com/new"
+status = 301                       # 301 | 302 | 303 | 307 | 308
+keep_path = true
+
+# A static website for everything else.
+[[routes]]
+name = "site"
+path = "/"
+static = "public"
+index = "index.html"
+spa = false                        # true serves index.html for unknown paths (single-page apps)
+response_headers = { Cache-Control = "public, max-age=300" }
