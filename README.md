@@ -1,10 +1,10 @@
 # dotfiles
 
 Personal setup that follows me across machines: the same coloured prompt and
-Linux-style commands in every shell I use (bash, PowerShell, cmd.exe), a few
-tools I run myself, and reusable knowledge for Claude Code. Each part lives
-in its own folder with its own README and installs independently. Clone once
-and pick what you need.
+Linux-style commands in every shell I use (bash, PowerShell, cmd.exe), a
+reverse proxy I run myself, and reusable knowledge for Claude Code. Each part
+lives in its own folder with its own README and installs independently. Clone
+once and pick what you need.
 
 ```sh
 git clone https://github.com/iyedexe/dotfiles ~/dotfiles
@@ -18,7 +18,6 @@ git clone https://github.com/iyedexe/dotfiles ~/dotfiles
 | [`windows-aliases/`](windows-aliases/) | The same prompt and Unix commands (`ls -la`, `grep -rn`, `find`, `df`, `rm -rf`, `export`...) for native Windows shells: a PowerShell profile and a cmd.exe AutoRun setup | [windows-aliases/README.md](windows-aliases/README.md) |
 | [`revproxy/`](revproxy/) | Small reverse proxy in Python, managed with uv. One TOML file routes to services, static sites, redirects and WebSockets, and reloads itself on save | [revproxy/README.md](revproxy/README.md) |
 | [`claude-skills/`](claude-skills/) | Five Claude Code skills distilled from classic programming books: clean code, functional programming, testing and debugging, data engineering, design and architecture | [claude-skills/README.md](claude-skills/README.md) |
-| [`python-utils/`](python-utils/) | Standalone Python helpers. Currently a decorator that adds `to_dict` and `from_dict` to dataclasses | [python-utils/README.md](python-utils/README.md) |
 
 ## Quick install
 
