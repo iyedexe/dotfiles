@@ -3,7 +3,7 @@
 :: install.cmd - register autorun.cmd so every cmd.exe session loads it.
 ::
 :: Run once from a Command Prompt (no admin needed, it only writes HKCU):
-::     %USERPROFILE%\dotfiles\cmd\install.cmd
+::     %USERPROFILE%\dotfiles\windows-aliases\cmd\install.cmd
 ::
 :: What it does:
 ::   1. HKCU\Software\Microsoft\Command Processor\AutoRun -> autorun.cmd
@@ -24,6 +24,8 @@ if defined CLINK (
     echo Clink found: %CLINK%
     set "AUTORUN="%CLINK%" inject --autorun --quiet ^& call "%HERE%\autorun.cmd""
     "%CLINK%" installscripts "%HERE%\clink" >nul
+    rem Clink reads .inputrc from the directory named by CLINK_INPUTRC.
+    setx CLINK_INPUTRC "%HERE%\clink" >nul
     "%CLINK%" set history.max_lines 10000 >nul
     "%CLINK%" set history.dupe_mode erase_prev >nul
     "%CLINK%" set history.shared true >nul

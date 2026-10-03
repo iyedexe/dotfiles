@@ -1,12 +1,13 @@
 # ============================================================================
 # ~/.bashrc  -  Git Bash on Windows (primary target), also WSL / Linux / macOS
 #
-# Companion of Microsoft.PowerShell_profile.ps1: same prompt, same history
-# behaviour, same aliases and helpers, so both shells feel identical.
+# Companion of the PowerShell profile in windows-aliases/powershell/: same
+# prompt, same history behaviour, same aliases and helpers, so both shells
+# feel identical.
 #
 # Install in Git Bash (home is C:\Users\<you>):
 #   git clone https://github.com/iyedexe/dotfiles ~/dotfiles
-#   echo '. ~/dotfiles/.bashrc' >> ~/.bashrc
+#   echo '. ~/dotfiles/bash/.bashrc' >> ~/.bashrc
 #   echo '[ -f ~/.bashrc ] && . ~/.bashrc' >> ~/.bash_profile   # Git Bash is a login shell
 # ============================================================================
 

@@ -1,13 +1,14 @@
 # cmd.exe (Command Prompt) setup
 
 Makes the classic Command Prompt, the shell that runs `.bat` files, behave
-like the Linux shell in `.bashrc` and the PowerShell profile.
+like the Linux shell in [`bash/.bashrc`](../../bash/) and the
+[PowerShell profile](../powershell/).
 
 ## Install
 
 ```bat
 git clone https://github.com/iyedexe/dotfiles %USERPROFILE%\dotfiles
-%USERPROFILE%\dotfiles\cmd\install.cmd
+%USERPROFILE%\dotfiles\windows-aliases\cmd\install.cmd
 ```
 
 `install.cmd` registers `autorun.cmd` in the AutoRun registry key (HKCU only,

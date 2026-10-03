@@ -9,9 +9,9 @@
 #
 # Install (pick one):
 #   1. Dot-source from your real profile:
-#        Add-Content $PROFILE '. "$HOME\dotfiles\Microsoft.PowerShell_profile.ps1"'
+#        Add-Content $PROFILE '. "$HOME\dotfiles\windows-aliases\powershell\Microsoft.PowerShell_profile.ps1"'
 #   2. Or symlink it (needs an elevated prompt or Developer Mode):
-#        New-Item -ItemType SymbolicLink -Path $PROFILE -Target "$HOME\dotfiles\Microsoft.PowerShell_profile.ps1" -Force
+#        New-Item -ItemType SymbolicLink -Path $PROFILE -Target "$HOME\dotfiles\windows-aliases\powershell\Microsoft.PowerShell_profile.ps1" -Force
 #
 # Real GNU tools win: if grep.exe, find.exe (GNU, not the System32 one), sed,
 # awk, etc. are on PATH (Git for Windows, MSYS2, scoop coreutils, busybox),

@@ -1,4 +1,4 @@
-# Readline settings for Clink (found through CLINK_INPUTRC set by autorun.cmd).
+# Readline settings for Clink (found through CLINK_INPUTRC, set by install.cmd).
 # Same bindings as .bashrc.
 set completion-ignore-case on
 set show-all-if-ambiguous on
